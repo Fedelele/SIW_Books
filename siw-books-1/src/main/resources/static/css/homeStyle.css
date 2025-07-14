@@ -1,0 +1,145 @@
+/* ================================== */
+/* =      STILE PER HOME & ADMIN    = */
+/* ================================== */
+
+.home-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.welcome-message{
+    text-align: center;
+}
+
+.welcome-message h1{
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    /*font-family: var(--font-headings), serif;*/
+    font-family: var(--font-headings);
+    color: var(--primary-color);
+}
+
+.welcome-message p{
+    font-size: 1.2rem;
+    color: var(--subtle-text-color);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.latest-books, .bestsellers, .top-authors, .dashboard-section {
+    width: 100%;
+}
+
+.book-gallery, .author-gallery {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    overflow-x: auto; /* Permette lo scorrimento orizzontale se necessario */
+    padding-bottom: 1rem;
+}
+
+.book-item, .author-item {
+    text-align: center;
+    flex-shrink: 0; /* Impedisce agli item di restringersi */
+    width: 200px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.book-item:hover, .author-item:hover {
+    transform: translateY(-5px);
+}
+
+.book-item a, .author-item a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.book-image, .author-image {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.book-item:hover .book-image, .author-item:hover .author-image {
+    box-shadow: 0 8px 20px rgba(44, 62, 80, 0.2);
+}
+
+.book-item a[style], .author-item span[style] {
+    font-weight: bold !important;
+    font-size: 1rem !important;
+    color: var(--text-color) !important;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.book-item-rating {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.book-item-rating .fa-star{
+    color: var(--accent-color);
+}
+
+.book-item-rating .far-star{
+    color: var(--border-color);
+}
+
+.book-item-rating .rating-value{
+    margin-left: 0.3rem;
+    color: var(--subtle-text-color);
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.author-image{
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+    filter: grayscale(30%);
+}
+
+.author-item:hover .author-image{
+    filter: grayscale(0%);
+    transform: scale(1.03);
+
+}
+
+.dashboard-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.book-item-title{
+    text-decoration: none !important;
+    font-weight: bold;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.author-item-name{
+    font-weight: bold;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.author-item a:hover{
+    text-decoration: none;
+}

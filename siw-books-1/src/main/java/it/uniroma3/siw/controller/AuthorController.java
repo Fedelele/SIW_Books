@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @Controller
 public class AuthorController {
@@ -32,6 +34,9 @@ public class AuthorController {
 
 	@Autowired
 	private AuthorService authorService;
+
+	@Value("${file.upload-dir}")
+	private String uploadDir;
 
 	@GetMapping(value="/admin/formNewAuthor")
 	public String formNewAuthor(Model model) {
@@ -56,8 +61,21 @@ public class AuthorController {
 		 */
 
 		try{
-			String fileName = author.getName() + author.getId() + '.' + image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf('.') + 1);
-			Path uploadPath = Paths.get("C:/Users/wufed/Desktop/uploads-siw-books/author-photo/");
+			//Version 1
+//			String fileName = author.getName() + author.getId() + '.' + image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf('.') + 1);
+//			Path uploadPath = Paths.get(uploadDir + "author-photo/");
+//			if (!Files.exists(uploadPath)) {
+//				Files.createDirectories(uploadPath);
+//			}
+//			Path filePath = uploadPath.resolve(fileName);
+//			image.transferTo(filePath.toFile());
+//			author.setImageUrl(String.format("/author-photo/%s", fileName));
+//			authorService.save(author);
+			//Version 2
+			String originalFilename = image.getOriginalFilename();
+			String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+			String fileName = UUID.randomUUID().toString() + extension;
+			Path uploadPath = Paths.get(uploadDir + "author-photo/");
 			if (!Files.exists(uploadPath)) {
 				Files.createDirectories(uploadPath);
 			}
@@ -65,7 +83,6 @@ public class AuthorController {
 			image.transferTo(filePath.toFile());
 			author.setImageUrl(String.format("/author-photo/%s", fileName));
 			authorService.save(author);
-
 		} catch (IOException e) {
 			log.error("Errore nel salvataggio del file", e);
 			model.addAttribute("error", "Errore durante il caricamento dell'immagine. Riprova.");
@@ -134,7 +151,7 @@ public class AuthorController {
 		return "authors.html";
 	}
 
-	@PostMapping("/author/delete/{id}")
+	@PostMapping("/admin/author/delete/{id}")
 	public String deleteAuthor(@PathVariable Long id, Model model) {
 		Author author = this.authorService.findById(id).orElse(null);
 		if(author == null){

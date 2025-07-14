@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Completed!</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<div class="container">
+    <div class="alert alert-success" style="text-align: center; padding: 2rem;">
+        <h2>Registration has been completed successfully!</h2>
+
+        <!-- Welcome message-->
+        <p th:if="${user != null}">
+            Welcome to the amazing world of SIW Books, <strong th:text="${user.name}">user</strong>!
+        </p>
+        <p>
+            Your account has been created. Now you can log in and start the journey with your favourite books!
+        </p>
+    </div>
+
+    <!-- Call to action: buttons to guide the user-->
+    <div style="margin-top: 2rem; text-align: center;">
+        <a th:href="@{/login}" class="btn btn-primary">LOGIN</a>
+        <a th:href="@{/home}" class="btn btn-secondary">HOME</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,199 @@
+/* ================================== */
+/* =      STILE GLOBALE (CORE)      = */
+/* ================================== */
+
+/* --- Variabili Globali (Palette & Font) --- */
+:root {
+    /* Nuova Palette "Sage & Teal" - Moderna ed elegante */
+    --background-color: #f4f7f6;    /* Grigio-verde salvia molto chiaro per lo sfondo */
+    --primary-color: #004d40;       /* Verde acqua scuro (Teal) per titoli e elementi primari */
+    --primary-hover-color: #00695c;  /* Versione più chiara per l'hover */
+    --accent-color: #ffab40;        /* Ambra/Arancione per accenti vivaci e caldi */
+    --text-color: #37474f;          /* Grigio ardesia scuro per il testo, più morbido del nero */
+    --subtle-text-color: #78909c;    /* Grigio ardesia chiaro per dettagli e testo secondario */
+    --border-color: #cfd8dc;        /* Grigio-blu chiaro per i bordi, si abbina bene */
+    --success-color: #2e7d32;       /* Verde per messaggi di successo */
+    --error-color: #c62828;         /* Rosso per messaggi di errore */
+    --secondary-bg-color: #ffffff;  /* Bianco per card e header, per un contrasto pulito */
+
+    --font-primary: "Inter", sans-serif;
+    --font-headings: "Faculty Glyphic", serif;
+}
+
+/* --- Reset e Stili di Base --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: 2.8rem; }
+h2 { font-size: 2.2rem; }
+h3 { font-size: 1.8rem; }
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+/* --- Layout e Contenitori --- */
+.container, .content, .flex-content {
+    width: 95%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 15px;
+}
+
+.flex { display: flex; }
+.flex-column { flex-direction: column; }
+.justify-start { justify-content: flex-start; }
+.justify-end { justify-content: flex-end; }
+.items-center { align-items: center; }
+.gap-4 { gap: 1.5rem; }
+.gap-9 { gap: 2.5rem; }
+.margin-bottom { margin-bottom: 1.5rem; }
+
+/* --- Header --- */
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background-color: var(--secondary-bg-color);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.flex-container h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+}
+
+.flex-container a {
+    font-weight: 500;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.flex-container .active {
+    color: var(--accent-color);
+    font-weight: bold;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 4px;
+}
+
+.flex-container .profile-icon i {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+.flex-container .profile-icon:hover i {
+    color: var(--accent-color);
+}
+
+/* --- Pulsanti --- */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.btn-secondary {
+    background-color: var(--subtle-text-color);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #95a5a6;
+    transform: translateY(-2px);
+}
+
+/* --- Placeholder per liste vuote --- */
+.placeholder-text {
+    text-align: center;
+    color: var(--subtle-text-color);
+    padding: 3rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    border: 2px dashed var(--border-color);
+    margin: 2rem 0;
+}
+
+/*.author-details-section {*/
+/*    margin-bottom: 2rem;*/
+/*    padding-left: calc(300px + 2rem);*/
+/*}*/
+
+/*.author-details-section p{*/
+/*    font-size: 1.1rem;*/
+/*    margin-bottom: 0.5rem;*/
+/*}*/
+
+/*.author-details-section strong{*/
+/*    color: var(--primary-color);*/
+/*}*/
+
+/*.bio {*/
+/*    clear: both;*/
+/*    margin-top: 2rem;*/
+/*    text-align: justify;*/
+/*}*/
+
+/*.justify-center{*/
+/*    justify-content: center;*/
+/*}*/
+
+/*.content-left{*/
+/*    width: 100%;*/
+/*    max-width: 1100px;*/
+/*}*/
+
+.rating .fas.fa-star{
+    color: var(--accent-color);
+}
+
+.rating .far.fa-star{
+    color: var(--border-color);
+}

@@ -12,6 +12,14 @@ import jakarta.validation.constraints.NotNull;
 //This is being implemented for REST controllers
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
+// --- AGGIUNGI QUESTO BLOCCO PER VEDERE SE FUNZIONA ADD BOOK ---
+@NamedEntityGraph(
+		name = "Book.withDescription",
+		attributeNodes = {
+			@NamedAttributeNode("description")
+		}
+)
+//-------------------------------------------------------------
 public class Book {
 	
 	@Id
@@ -23,9 +31,13 @@ public class Book {
 	private Integer year;
 
 	//Variables for the description and images of the book
-	@Lob
+//	@Lob
+	@Column(columnDefinition = "Text")
 	private String description;
+//	@Lob
 	private String imageUrl;
+
+	private double averageRating;
 
 	@ManyToMany
 	@JoinTable(
@@ -79,6 +91,14 @@ public class Book {
 	}
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+
+	public double getAverageRating(){
+		return this.averageRating;
+	}
+
+	public void setAverageRating(double averageRating){
+		this.averageRating = averageRating;
 	}
 
 	public List<Author> getAuthors(){

@@ -26,10 +26,6 @@ public class ReviewService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public Optional<Review> getReviewById(Long id){
-		return reviewRepository.findById(id);
-	}
-
 	public List<Review> getReviewsByBook(Book book){
 		return reviewRepository.findByBook(book);
 	}
@@ -48,20 +44,27 @@ public class ReviewService {
 		Book managedBook = bookRepository.findById(review.getBook().getId()).orElseThrow(() -> new IllegalArgumentException("Book not found!"));
 		review.setUser(managedUser);
 		review.setBook(managedBook);
-		return reviewRepository.save(review);
+		Review savedReview = reviewRepository.save(review);
+		updateBookAverageRating(savedReview.getBook());
+		return savedReview;
 	}
 
-	public Review findReviewByUserAndBook(User user, Book book) {
-		return reviewRepository.findByUserAndBook(user, book).orElse(null);
+	public Optional<Review> findReviewByUserAndBook(User user, Book book) {
+		return reviewRepository.findByUserAndBook(user, book);
 	}
 
 	public boolean hasUserReviewedBook(User user, Book book) {
-		return findReviewByUserAndBook(user, book) != null;
+		return findReviewByUserAndBook(user, book).isPresent();
 	}
 
 	@Transactional
 	public void deleteReview(Long id) {
-		reviewRepository.deleteById(id);
+		//Finds the review, if exists then ->
+		this.reviewRepository.findById(id).ifPresent(review -> {
+			Book book = review.getBook();
+			reviewRepository.deleteById(id);
+			updateBookAverageRating(book);
+		});
 	}
 
 	@Transactional
@@ -73,4 +76,18 @@ public class ReviewService {
 	}
 
 	public Optional<Review> findById(Long id) { return reviewRepository.findById(id);}
+
+	private void updateBookAverageRating(Book book){
+		List<Review> reviews = reviewRepository.findByBook(book);
+		if(reviews.isEmpty()){
+			book.setAverageRating(0.0);
+		} else{
+			double average = reviews.stream()
+									.mapToInt(Review::getRating)
+									.average()
+									.orElse(0.0);
+			book.setAverageRating(Math.round(average * 10.0) / 10.0);
+		}
+		bookRepository.save(book);
+	}
 }

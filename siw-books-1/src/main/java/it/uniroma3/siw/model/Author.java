@@ -29,16 +29,18 @@ public class Author {
 	private String nationality;
 
 	//Variables for the description and images of the author
-	@Lob
+//	@Lob
+	@Column(columnDefinition = "Text")
 	private String bio;
+//	@Lob
 	private String imageUrl;
-;
+
 	@ManyToMany(mappedBy = "authors", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private Set<Book> booksWritten;
+	private List<Book> booksWritten;
 	
 	//Constructor for Author to initialize the HashSet
 	public Author() {
-		this.booksWritten = new HashSet<>();
+		this.booksWritten = new ArrayList<>();
 	}
 	
 	public Long getId() {
@@ -104,11 +106,11 @@ public class Author {
 		this.imageUrl = imageUrl;
 	}
 
-	public Set<Book> getAuthorsOf(){
+	public List<Book> getAuthorsOf(){
 		return booksWritten;
 	}
 	
-	public void setAuthorsOf(Set<Book> booksWritten) {
+	public void setAuthorsOf(List<Book> booksWritten) {
 		this.booksWritten = booksWritten;
 	}
 	
@@ -127,7 +129,7 @@ public class Author {
 			return false;
 		Author o = (Author) obj;
 		return Objects.equals(name, o.name) && Objects.equals(surname, o.surname) &&
-				dateOfBirth == o.getDateOfBirth() && Objects.equals(nationality, o.nationality)
+				Objects.equals(dateOfBirth, o.dateOfBirth) && Objects.equals(nationality, o.nationality)
 				&& Objects.equals(id, o.id);
 	}
 	

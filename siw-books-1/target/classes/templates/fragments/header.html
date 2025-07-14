@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<!-- Fragment for the header -->
+<header class="flex-container" th:fragment="header">
+
+    <div class="flex items-center justify-start gap-9">
+        <h1 style='font-family: "Faculty Glyphic", cursive;'>SIW Books</h1>
+
+        <a th:if="${activePage != 'home'}" th:href="@{/home}">Home</a>
+        <span th:if="${activePage == 'home'}" class="active">Home</span>
+
+        <a th:if="${activePage != 'books'}" th:href="@{/book/all}">Books</a>
+        <span th:if="${activePage == 'books'}" class="active">Books</span>
+
+        <a th:if="${activePage != 'authors'}" th:href="@{/author/all}">Authors</a>
+        <span th:if="${activePage == 'authors'}" class="active">Authors</span>
+    </div>
+    <div class="flex justify-end gap-9">
+        <!-- if the user has not logged in yet, it shows the Login link-->
+        <a sec:authorize="!isAuthenticated()" class="padding" th:href="@{/login}">Login</a>
+
+        <!-- if the user is logged in-->
+        <div sec:authorize="isAuthenticated()" class="flex items-center gap-4">
+            <a class="profile-icon" th:href="@{/profile}">
+                <i class="fas fa-user-circle"></i>
+                <!--shows the username of the user-->
+                <span sec:authentication="name" style="font-size: 0.9rem; margin-left: 5px;"></span>
+            </a>
+            <!--Logout form-->
+            <form th:action="@{/logout}" method="post" style="margin: 0;">
+                <button type="submit" class="btn-link" style="background: none; color: var(--primary-color); cursor:pointer; font-size:1rem; font-family: var(--font-primary); font-weight: 500;">Logout</button>
+            </form>
+        </div>
+    </div>
+</header>
+</body>
+</html>

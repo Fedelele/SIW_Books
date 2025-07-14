@@ -19,17 +19,21 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class AuthConfiguration {
-	
+
 	@Autowired
-	private DataSource dataSource;
-	
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth)throws Exception{
-		auth.jdbcAuthentication()
-			.dataSource(dataSource)
-			.authoritiesByUsernameQuery("SELECT username, user_role FROM credentials WHERE username=?")
-			.usersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentials WHERE username=?");
-	}
+	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
+	//version 1
+//	@Autowired
+//	private DataSource dataSource;
+//
+//	@Autowired
+//	public void configureGlobal(AuthenticationManagerBuilder auth)throws Exception{
+//		auth.jdbcAuthentication()
+//			.dataSource(dataSource)
+//			.authoritiesByUsernameQuery("SELECT username, user_role FROM credentials WHERE username=?")
+//			.usersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentials WHERE username=?");
+//	}
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -48,16 +52,17 @@ public class AuthConfiguration {
 		http
 				.authorizeHttpRequests(authorize -> authorize
 						// Public permits: anyone can access
-						.requestMatchers(HttpMethod.GET, "/", "/index", "/login", "/register", "/css/**", "/images/**", "/favicon.ico").permitAll()
-						.requestMatchers(HttpMethod.GET, "/books/**", "/authors/**", "/book/all", "/author/all", "/book/details/**", "/author/details/**").permitAll()
+						.requestMatchers(HttpMethod.GET, "/", "/index", "/home", "/login", "/register", "/css/**", "/js/**", "/images/**", "/favicon.ico", "/author-photo/**", "/books-covers/**").permitAll()
+						.requestMatchers(HttpMethod.GET, "/book/**", "/author/**").permitAll()
 						.requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
 
-						//Accessible only to users with user role
-						.requestMatchers("/user/**").hasAuthority("USER")
-
-						// Accessible only to admins
+						//Accessible to admin only
 						.requestMatchers("/admin/**").hasAuthority("ADMIN")
+						//Accessible only to users with user role
+						.requestMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
 
+						//Accessible only to authenticated users
+						.requestMatchers("/profile/**").authenticated()
 						//Any other request requires authentication
 						.anyRequest().authenticated()
 				)
@@ -65,7 +70,8 @@ public class AuthConfiguration {
 						.loginPage("/login")
 						.permitAll()
 						//If successful redirects to the root; The controller decides where to redirect (admin or public)
-						.defaultSuccessUrl("/", true)
+//						.defaultSuccessUrl("/", true)
+						.successHandler(customAuthenticationSuccessHandler)
 						.failureUrl("/login?error=true")
 				)
 				.logout(logout -> logout
@@ -86,18 +92,14 @@ public class AuthConfiguration {
 //	    http.csrf().disable().cors().disable().authorizeHttpRequests()
 //
 //	        // Accesso libero a home, login, registrazione, statici
-//	        .requestMatchers(HttpMethod.GET, "/", "/index", "/login", "/register", "/css/**", "/images/**", "/favicon.ico").permitAll()
+//	        .requestMatchers(HttpMethod.GET, "/", "/index", "/login", "/register", "/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
+//	        .requestMatchers(HttpMethod.GET, "/books/**", "/authors/**", "/book/all", "/author/all", "/book/details/**", "/author/details/**").permitAll()
+
 //	        .requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
 //
-//	        // Accesso pubblico alle risorse visibili anche agli utenti anonimi (es. libri, autori, recensioni)
-//	        .requestMatchers(HttpMethod.GET, "/books/**", "/authors/**", "/rest/books/**").permitAll()
-//
-//	        // Accesso REST admin-only
-//	        .requestMatchers("/admin/**", "/admin/rest/**").hasAuthority("ROLE_ADMIN")
-//
-//	        // Accesso utente registrato per recensioni e profilo
-//	        .requestMatchers("/user/**").hasAuthority("ROLE_USER")
-//
+	// Accessible only to admins
+//			.requestMatchers("/admin/**").hasAuthority("ADMIN")
+////
 //	        // Tutte le altre richieste richiedono autenticazione
 //	        .anyRequest().authenticated()
 //

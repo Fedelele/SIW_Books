@@ -3,6 +3,8 @@ package it.uniroma3.siw.service;
 import it.uniroma3.siw.model.Book;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.model.Author;
@@ -11,8 +13,8 @@ import it.uniroma3.siw.repository.AuthorRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.context.annotation.Lazy;
 
 @Service
 public class AuthorService {
@@ -21,12 +23,15 @@ public class AuthorService {
 	private AuthorRepository authorRepository;
 
 	@Autowired
+	@Lazy
 	private BookService bookService;
-	
+
+	@Transactional
 	public Optional<Author> findById(Long id) {
-		return authorRepository.findById(id);
+		return this.authorRepository.findWithBooksById(id);
 	}
-	
+
+	@Transactional
 	public Iterable<Author> findAll(){
 		return this.authorRepository.findAll();
 	}
@@ -43,13 +48,10 @@ public class AuthorService {
 	//Looks for authors based off the letters contained in their names
 	public List<Author> searchAuthorsByName(String keyword){
         List<Author> authors = this.authorRepository.findAll();
-        if(keyword == null || keyword.isEmpty()){
+        if(keyword == null || keyword.trim().isEmpty()){
 			return authors;
 		}
-		String lowerKeyword = keyword.toLowerCase();
-		return authors.stream()
-				.filter(author -> author.getName().toLowerCase().contains(lowerKeyword))
-				.collect(Collectors.toList());
+		return this.authorRepository.findByNameContainingIgnoreCaseOrSurnameContainingIgnoreCase(keyword, keyword);
 	}
 
 	public void removeAuthorFromBook(Author author, Book book){
@@ -57,7 +59,8 @@ public class AuthorService {
 		//To maintain the bidirectionality we have to eliminate the book from the Set
 		//associated with the author and the books written
 		author.getAuthorsOf().remove(book);
-		this.bookService.save(book);
+		//LET ME TRY GETTING THIS OFF
+//		this.bookService.save(book);
 	}
 
 	//Method to delete the author from every book he's been mentioned
@@ -65,7 +68,8 @@ public class AuthorService {
 	public void deleteAuthor(Author author){
 		List<Book> booksToDelete = new ArrayList<>(author.getAuthorsOf());
 		for(Book b : booksToDelete){
-			removeAuthorFromBook(author, b);
+//			removeAuthorFromBook(author, b);
+			b.getAuthors().remove(author);
 		}
 		this.authorRepository.delete(author);
 	}
@@ -79,7 +83,7 @@ public class AuthorService {
 	@Transactional
 	public Author updateAuthor(Long authorId, Author updatedData) {
 		Author authorToUpdate = this.authorRepository.findById(authorId)
-				.orElseThrow(() -> new IllegalArgumentException("Autore non trovato con id " + authorId));
+				.orElseThrow(() -> new IllegalArgumentException("Author not found with id " + authorId));
 		authorToUpdate.setName(updatedData.getName());
 		authorToUpdate.setSurname(updatedData.getSurname());
 		authorToUpdate.setDateOfBirth(updatedData.getDateOfBirth());
@@ -87,5 +91,12 @@ public class AuthorService {
 		authorToUpdate.setNationality(updatedData.getNationality());
 		authorToUpdate.setBio(updatedData.getBio());
 		return this.authorRepository.save(authorToUpdate);
+	}
+
+	//Method to find authors with most books published
+	@Transactional
+	public List<Author> findAuthorsWithMostBooks(int limit) {
+		Pageable pageable = PageRequest.of(0, limit);
+		return this.authorRepository.findAuthorsWithMostBooks(pageable);
 	}
 }

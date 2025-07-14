@@ -1,8 +1,10 @@
 package it.uniroma3.siw.service;
 
 import it.uniroma3.siw.model.Author;
-import it.uniroma3.siw.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.model.Book;
@@ -24,12 +26,15 @@ public class BookService {
     private ReviewService reviewService;
 
 	@Autowired
+	@Lazy
 	private AuthorService authorService;
 
 
 	@Transactional
 	public Optional<Book> findById(Long id) {
-		return this.bookRepository.findById(id);
+		Optional<Book> optionalBook = this.bookRepository.findById(id);
+        optionalBook.ifPresent(book -> book.getAuthors().size());
+		return optionalBook;
 	}
 
 	@Transactional
@@ -52,16 +57,14 @@ public class BookService {
 
 	@Transactional
 	public List<Book> searchBookByTitle(String keyword){
-        List<Book> allBooks = new ArrayList<>(this.bookRepository.findAll());
-
 		if(keyword == null || keyword.isEmpty()){
-			return allBooks;
+			return this.bookRepository.findAll();
 		}
-
-		String lowerKeyword = keyword.toLowerCase();
-		return allBooks.stream()
-				.filter(book -> book.getTitle().toLowerCase().contains(lowerKeyword))
-				.collect(Collectors.toList());
+		return this.bookRepository.findByTitleContainingIgnoreCase(keyword);
+//		String lowerKeyword = keyword.toLowerCase();
+//		return allBooks.stream()
+//				.filter(book -> book.getTitle().toLowerCase().contains(lowerKeyword))
+//				.collect(Collectors.toList());
 	}
 
 	@Transactional
@@ -80,11 +83,22 @@ public class BookService {
 		Book bookToUpdate = this.bookRepository.findById(bookId)
 				.orElseThrow(() -> new IllegalArgumentException("Libro non trovato con id: " + bookId));
 
+		//ADD THIS LET ME SEE
+		Optional<Book> duplicate = bookRepository.findByTitleAndYear(updatedData.getTitle(), updatedData.getYear());
+		if(duplicate.isPresent() && !duplicate.get().getId().equals(bookId)){
+			throw new IllegalArgumentException("A book with this title and year already exists");
+		}
 		bookToUpdate.setTitle(updatedData.getTitle());
 		bookToUpdate.setYear(updatedData.getYear());
 		bookToUpdate.setDescription(updatedData.getDescription());
 		// Authors management
-		bookToUpdate.getAuthors().clear(); // Removes all existing authors
+//		bookToUpdate.getAuthors().clear(); // Removes all existing authors
+		//Like above but more robust
+		for(Author author : new ArrayList<>(bookToUpdate.getAuthors())) {
+			author.getAuthorsOf().remove(bookToUpdate);
+		}
+		bookToUpdate.getAuthors().clear();
+
 		if (authorIds != null && !authorIds.isEmpty()) {
 			List<Author> newAuthors = authorService.findByIds(authorIds);
 			for (Author author : newAuthors) {
@@ -92,5 +106,19 @@ public class BookService {
 			}
 		}
 		return this.bookRepository.save(bookToUpdate);
+	}
+
+	//Method to find books ordered based on their average rating from highest to lowest
+	@Transactional
+	public List<Book> findTopRatedBooks(int limit) {
+		Pageable pageable = PageRequest.of(0, limit);
+		return this.bookRepository.findTopRatedBooks(pageable);
+	}
+
+	//Method to find most recent books, ordered by release year
+	@Transactional
+	public List<Book> findMostRecentBooks(int limit) {
+		Pageable pageable = PageRequest.of(0, limit);
+		return this.bookRepository.findByOrderByYearDesc(pageable);
 	}
 }

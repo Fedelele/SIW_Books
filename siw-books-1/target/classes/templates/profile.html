@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap"/>
+  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"/>
+  <link rel="stylesheet" th:href="@{/css/allBooksStyle.css}">
+</head>
+<body style='font-family: "Inter", sans-serif;'>
+<header th:replace="~{fragments/header :: header}"></header>
+
+<div class="container" style="margin-top: 2rem;">
+  <div th:if="${user}">
+    <div class="flex gap-9">
+      <!-- Colonna sinistra per l'immagine (placeholder) -->
+      <div style="flex: 0 0 200px; text-align: center;">
+        <i class="fas fa-user-circle" style="font-size: 150px; color: var(--border-color);"></i>
+      </div>
+
+      <!-- Colonna destra per i dettagli -->
+      <div style="flex-grow: 1;">
+        <h1 th:text="'Profile: ' + ${credentials.username}">User Profile</h1>
+        <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
+        <p><strong>Surname:</strong> <span th:text="${user.surname}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+        <p><strong>Username:</strong> <span th:text="${credentials.username}"></span></p>
+
+        <!-- Pulsanti di azione (per ora non funzionanti) -->
+        <div style="margin-top: 1.5rem;">
+          <a href="#" class="btn btn-primary">Edit Profile</a>
+          <a href="#" class="btn btn-secondary">Change Password</a>
+        </div>
+      </div>
+    </div>
+
+    <hr style="margin: 3rem 0;">
+
+    <div>
+      <h2>Your Reviews</h2>
+      <div th:if="${#lists.isEmpty(reviews)}" class="placeholder-text">
+        <p>You haven't written any reviews yet.</p>
+      </div>
+
+      <div th:if="${!#lists.isEmpty(reviews)}" class="content-list-container">
+        <div th:each="review : ${reviews}" class="content-list-item-wrapper">
+          <a class="content-list-item-link" th:href="@{'/book/details/' + ${review.book.id}}">
+            <div class="content-list-item">
+              <img class="content-thumbnail" th:src="${review.book.imageUrl}" alt="Book Cover">
+              <div class="content-details">
+                <span class="content-title-text" th:text="${review.title}">Review Title</span>
+                <span class="content-subtitle-text" th:text="'For: ' + ${review.book.title}">For: Book Title</span>
+                <div class="rating" style="margin-top: 5px;">
+                                    <span th:each="i : ${#numbers.sequence(1, 5)}">
+                                        <i class="fa-star" th:classappend="${i <= review.rating} ? 'fas' : 'far'"></i>
+                                    </span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div th:unless="${user}" class="placeholder-text">
+    <p>User not found.</p>
+  </div>
+</div>
+
+</body>
+</html>

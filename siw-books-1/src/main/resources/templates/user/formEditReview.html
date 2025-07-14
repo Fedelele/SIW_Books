@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap"/>
+    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"/>
+    <link rel="stylesheet" th:href="@{/css/homeStyle.css}">
+    <link rel="stylesheet" th:href="@{/css/formStyle.css}">
+    <link rel="stylesheet" th:href="@{/css/bookStyle.css}">
+    <script rel="script" th:src="@{/js/bookScript.js}" defer></script>
+    <script rel="script" th:src="@{/js/formScript.js}" defer></script>
+    <title>Edit Review</title>
+</head>
+<body style='font-family: "Inter", sans-serif;'>
+    <header th:replace="~{fragments/header :: header}"></header>
+    <div class="flex content">
+        <div class="form-container">
+            <h2>Change your review for: <em th:text="${book.title}">Book Title</em></h2>
+            <div th:if="${!#lists.isEmpty(book.authors)}">
+                <p>Of
+                    <span th:each="author, iterStat : ${book.authors}">
+                        <span th:text="${author.name + ' ' + author.surname}"></span><span th:if="${!iterStat.last}">, </span>
+                    </span>
+                </p>
+            </div>
+
+            <form th:action="@{'/user/review/edit/' + ${review.id}}" th:object="${review}" method="post">
+                <!-- Global errors management (for example if it already exists a review) -->
+                <div th:if="${#fields.hasGlobalErrors()}" class="error-message">
+                    <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">Global Error</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Review's Title:</label>
+                    <input type="text" id="title" th:field="*{title}" required>
+                    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="rating">Rating (from 1 to 5):</label>
+                    <div id="stars">
+                        <input type="hidden" id="rating" th:field="*{rating}" required>
+
+                        <i class="far fa-star star" data-value="1"></i>
+                        <i class="far fa-star star" data-value="2"></i>
+                        <i class="far fa-star star" data-value="3"></i>
+                        <i class="far fa-star star" data-value="4"></i>
+                        <i class="far fa-star star" data-value="5"></i>
+                    </div>
+                    <div th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" class="error-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="text">Review Description:</label>
+                    <textarea id="text" th:field="*{text}" rows="6" required></textarea>
+                    <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}" class="error-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Post Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
