@@ -1,8 +1,6 @@
 package it.uniroma3.siw.service;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import it.uniroma3.siw.model.Credentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -40,11 +38,7 @@ public class UserService {
 	//This method retrieves all Users from the DB
 	@Transactional
 	public List<User> getAllUser(){
-		List<User> result = new ArrayList<>();
-		Iterable<User> iterable = this.userRepository.findAll();
-		for(User user : iterable)
-			result.add(user);
-		return result;
+		return this.userRepository.findAll();
 	}
 	
 }

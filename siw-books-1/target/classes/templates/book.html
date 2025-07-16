@@ -19,7 +19,6 @@
 </head>
 <body style='font-family: "Inter", sans-serif;'>
     <header th:replace="~{fragments/header :: header}"></header>
-    <!--<div class="flex book-content justify-start">-->
     <div class="container book-page-container" th:if="${book != null}">
         <div class="book-header">
             <h1 th:text="${book.title}">Book Title</h1>
@@ -114,55 +113,3 @@
     </div>
 </body>
 </html>
-
-
-
-
-
-
-
-<!--                        <div class="review-user" style="color: #666" th:text="${userReview.user.name} + ' ' + ${userReview.user.surname}">User</div>-->
-<!--                            <div class="review user" style="white-space: nowrap; font-size: 24px; font-weight: bold;" th:text="${userReview.title}">Title</div>-->
-<!--                            <div class="rating margin-bottom">-->
-<!--                                <span th:each="i: ${#numbers.sequence(1, 5)}">-->
-<!--                                    <i class="fa star" th:classappend="${i <= userReview.rating} ? 'fa fa-star' : 'far fa-star'"></i>-->
-<!--                                </span>-->
-<!--                            </div>-->
-<!--                            <div class="review-description" th:text="${userReview.text}">Text</div>-->
-<!--                        </div>-->
-<!--                        <div class="review-actions" style="display: flex; gap: 1rem; align-items: center; margin-top: -1rem; margin-bottom: 1rem;">-->
-<!--                            <a class="fas fa-pen" th:href="@{'/user/formEditReview/' + ${userReview.id}}"></a>-->
-<!--                            <a class="delete-icon" sec:authorize="hasAuthority('ADMIN')" th:data-id="${userReview.id}" th:data-title="${userReview.title}" onclick="return confirmDeleteReview(this.getAttribute('data-id'), this.getAttribute('data-title'))">-->
-<!--                                <i class="fa-solid fa-trash"></i>-->
-<!--                            </a>-->
-<!--                        </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                <div th:if="${!hasReviewed && isLoggedIn}" style="margin-bottom: 2rem;">-->
-<!--                    <a th:href="@{'/user/formNewReview/' + ${book.id}}" class="btn btn-primary">-->
-<!--                        <i class="fas fa-plus-circle"></i>Add a new review-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--                <h3 th:if="${!#lists.isEmpty(otherReviews)}">Reviews:</h3>-->
-<!--                <div class="review">-->
-<!--                    <div class="content-list-item-wrapper" th:each="review : ${otherReviews}">-->
-<!--                    <div class="review margin-bottom content-list-item-link" style="border-bottom: 1px solid #ccc; padding: 1em; width: 100%">-->
-<!--                        <div class="review-user" style="color: #666" th:text="${review.user.name} + ' ' + ${review.user.surname}">User</div>-->
-<!--                        <div class="review-user" style="white-space: nowrap; font-size: 24px; font-weight: bold;" th:text="${review.title}">Title</div>-->
-<!--                        <div class="rating margin-bottom">-->
-<!--                            <span th:each="i : ${#numbers.sequence(1, 5)}">-->
-<!--                                <i class="fa star" th:classappend="${i <= review.rating} ? 'fa fa-star' : 'far fa-star'"></i>-->
-<!--                            </span>-->
-<!--                        </div>-->
-<!--                        <div class="review-description" th:text="${review.text}">Description</div>-->
-<!--                    </div>-->
-<!--                    <a class="delete-icon" sec:authorize="hasAuthority('ADMIN')" th:data-id="${review.id}" th:data-title="${review.title}" onclick="return confirmDeleteReview(this.getAttribute('data-id'), this.getAttribute('data-title'))">-->
-<!--                        <i class="fa-solid fa-trash"></i>-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--    </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</body>-->
-<!--</html>-->

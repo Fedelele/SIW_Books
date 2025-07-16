@@ -13,7 +13,7 @@ public class Review {
 	private Long id;
 	private String title;
 	private int rating;
-	//@Column(length = 2000)
+
 	private String text;
 
 	//To assure that every review is linked to a user and a book
@@ -87,6 +87,6 @@ public class Review {
 	    	if(this.getClass()!=obj.getClass())
 	    		return false;
 	    	Review o = (Review) obj;
-	    	return Objects.equals(title, o.title) && user.equals(o.user) && book.equals(o.book);
+	    	return Objects.equals(user, o.user) && Objects.equals(book, o.book);
 	    }
 }

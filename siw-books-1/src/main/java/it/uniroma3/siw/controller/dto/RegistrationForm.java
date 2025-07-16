@@ -1,5 +1,3 @@
-// File: src/main/java/it/uniroma3/siw/controller/dto/RegistrationForm.java
-// (Crea il package dto se non esiste)
 package it.uniroma3.siw.controller.dto;
 
 import jakarta.validation.constraints.Email;
@@ -8,25 +6,25 @@ import jakarta.validation.constraints.Size;
 
 public class RegistrationForm {
 
-    @NotBlank(message = "Il nome è obbligatorio")
+    @NotBlank(message = "Name is required")
     private String name;
 
-    @NotBlank(message = "Il cognome è obbligatorio")
+    @NotBlank(message = "Surname is required")
     private String surname;
 
-    @NotBlank(message = "L'email è obbligatoria")
-    @Email(message = "Formato email non valido")
+    @NotBlank(message = "Email is required")
+    @Email(message = "Email type not valid")
     private String email;
 
-    @NotBlank(message = "L'username è obbligatorio")
-    @Size(min = 4, max = 20, message = "L'username deve avere tra 4 e 20 caratteri")
+    @NotBlank(message = "Username is required")
+    @Size(min = 4, max = 20, message = "Username must have 4 to 20 characters")
     private String username;
 
-    @NotBlank(message = "La password è obbligatoria")
-    @Size(min = 6, max = 20, message = "La password deve avere tra 6 e 20 caratteri")
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, max = 20, message = "Username must have 6 to 20 characters")
     private String password;
 
-    // Genera Getters e Setters per tutti i campi
+   //setters and getters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public String getSurname() { return surname; }

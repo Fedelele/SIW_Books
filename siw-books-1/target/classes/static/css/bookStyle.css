@@ -1,5 +1,5 @@
 /* ================================== */
-/* =   STILE PER PAGINA DETTAGLIO   = */
+/* =   STYLE FOR DETAILS PAGE       = */
 /* ================================== */
 
 .book-page-container {
@@ -26,12 +26,12 @@
 
 .book-main-content {
     display: flex;
-    gap: 2.5rem; /* Spazio tra immagine e info */
-    align-items: flex-start; /* Allinea gli elementi in alto */
+    gap: 2.5rem; /* Space between image and details */
+    align-items: flex-start;
 }
 
 .book-cover {
-    flex: 0 0 300px; /* Non cresce, non si restringe, base 300px */
+    flex: 0 0 300px;
     position: sticky;
     top: 2rem;
 }
@@ -44,7 +44,7 @@
 }
 
 .book-info {
-    flex: 1; /* Occupa lo spazio rimanente */
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -73,7 +73,7 @@
     color: var(--subtle-text-color);
 }
 
-/* Stile per la separazione delle recensioni */
+/* Style for review spacing */
 .reviews-section {
     margin-top: 2rem;
     padding-top: 2rem;
@@ -131,103 +131,3 @@
 .reviews-section .content-list-item-wrapper:last-child{
     margin-bottom: 0;
 }
-
-/*.book-content {*/
-/*    flex-direction: column;*/
-/*}*/
-
-/*.book-content > .title {*/
-/*    text-align: center;*/
-/*    border-bottom: 2px solid var(--border-color);*/
-/*    padding-bottom: 1rem;*/
-/*    margin-bottom: 2rem;*/
-/*}*/
-
-/*.book-content > .title p {*/
-/*    color: var(--subtle-text-color);*/
-/*    font-size: 1.2rem;*/
-/*    margin-bottom: 0.5rem;*/
-/*}*/
-
-/*.flex-content-2 {*/
-/*    display: flex;*/
-/*    gap: 3rem;*/
-/*    width: 100%;*/
-/*    max-width: 1100px;*/
-/*}*/
-
-/*.content-left {*/
-/*    flex: 3;*/
-/*}*/
-
-/*.content-right {*/
-/*    flex: 1;*/
-/*    min-width: 250px;*/
-/*}*/
-
-/*.content-left img.justify-start {*/
-/*    width: 300px;*/
-/*    height: auto;*/
-/*    float: left;*/
-/*    margin-right: 2rem;*/
-/*    margin-bottom: 1rem;*/
-/*    border-radius: 8px;*/
-/*    box-shadow: 0 5px 15px rgba(0,0,0,0.1);*/
-/*}*/
-
-/*.book-details-section {*/
-/*    margin-bottom: 2rem;*/
-/*    padding-left: calc(300px + 2rem);*/
-/*}*/
-
-/*.book-details-section p{*/
-/*    font-size: 1.1rem;*/
-/*    margin-bottom: 0.5rem;*/
-/*}*/
-
-/*.book-details-section strong{*/
-/*    color: var(--primary-color);*/
-/*}*/
-
-/*.description {*/
-/*    clear: both;*/
-/*    text-align: justify;*/
-/*}*/
-
-/*.separator {*/
-/*    clear: both;*/
-/*    height: 2rem;*/
-/*}*/
-
-/*!* Sezione Recensioni *!*/
-/*.review {*/
-/*    margin-top: 1rem;*/
-/*}*/
-
-/*.review h2 {*/
-/*    margin-bottom: 1.5rem;*/
-/*}*/
-
-/*.rating-section {*/
-/*    background-color: var(--secondary-bg-color);*/
-/*    padding: 1.5rem;*/
-/*    border-radius: 8px;*/
-/*    border: 1px solid var(--border-color);*/
-/*    position: sticky;*/
-/*    top: 2rem; !* Rende la sezione "sticky" allo scroll *!*/
-/*}*/
-
-/*.average-rating .fa-star {*/
-/*    color: var(--accent-color);*/
-/*    font-size: 1.5rem;*/
-/*}*/
-
-/*.average-rating .far-star {*/
-/*    color: var(--border-color);*/
-/*}*/
-
-/*.average-rating span:last-child {*/
-/*    font-weight: bold;*/
-/*    margin-left: 0.5rem;*/
-/*    color: var(--subtle-text-color);*/
-/*}*/

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -14,11 +15,11 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@NotBlank(message = "Il nome è obbligatorio")
+	@NotBlank(message = "Name required")
 	private String name;
-	@NotBlank(message = "Il cognome è obbligatorio")
+	@NotBlank(message = "Surname required")
 	private String surname;
-	@NotBlank(message = "L'indirizzo mail è obbligatorio")
+	@NotBlank(message = "Email required")
 	private String email;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -66,12 +67,7 @@ public class User {
 	
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime*result+((name == null) ? 0 : name.hashCode());
-		result = prime*result+((surname == null) ? 0 : surname.hashCode());
-		result = prime*result+((email == null) ? 0 : email.hashCode());	
-		return result;
+		return Objects.hash(name, surname, email);
 	}
 	
 	@Override
@@ -83,22 +79,6 @@ public class User {
 		if(this.getClass()!=obj.getClass())
 			return false;
 		User o = (User) obj;
-		if(name==null) {
-			if(o.name!=null)
-				return false;
-		}else if(!name.equals(o.name))
-			return false;
-		if(surname==null) {
-			if(o.surname!=null)
-				return false;
-		}else if(!surname.equals(o.surname))
-			return false;
-		if(email==null) {
-			if(o.email!=null)
-				return false;
-		}else if(!email.equals(o.email))
-			return false;
-		return true;
+		return Objects.equals(name, o.name) && Objects.equals(surname, o.surname) && Objects.equals(email, o.email);
 	}
-
 }

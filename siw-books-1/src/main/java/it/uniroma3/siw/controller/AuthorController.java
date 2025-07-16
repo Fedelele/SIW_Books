@@ -54,24 +54,7 @@ public class AuthorController {
 			return "/admin/formNewAuthor.html";
 		}
 
-		/*
-		 *Before using the author id I need to save it in the DB
-		 * authorService.save(author);
-		 *Now the id is available for use
-		 */
-
 		try{
-			//Version 1
-//			String fileName = author.getName() + author.getId() + '.' + image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf('.') + 1);
-//			Path uploadPath = Paths.get(uploadDir + "author-photo/");
-//			if (!Files.exists(uploadPath)) {
-//				Files.createDirectories(uploadPath);
-//			}
-//			Path filePath = uploadPath.resolve(fileName);
-//			image.transferTo(filePath.toFile());
-//			author.setImageUrl(String.format("/author-photo/%s", fileName));
-//			authorService.save(author);
-			//Version 2
 			String originalFilename = image.getOriginalFilename();
 			String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
 			String fileName = UUID.randomUUID().toString() + extension;
@@ -84,11 +67,11 @@ public class AuthorController {
 			author.setImageUrl(String.format("/author-photo/%s", fileName));
 			authorService.save(author);
 		} catch (IOException e) {
-			log.error("Errore nel salvataggio del file", e);
-			model.addAttribute("error", "Errore durante il caricamento dell'immagine. Riprova.");
+			log.error("Error while saving the file", e);
+			model.addAttribute("error", "Error during the image upload. Retry please.");
 			return "/admin/formNewAuthor.html";
 		}
-		redirectAttributes.addFlashAttribute("success", "Autore aggiunto con successo");
+		redirectAttributes.addFlashAttribute("success", "Author added successfully!");
 		return "redirect:/author/all";
 	}
 
@@ -96,7 +79,7 @@ public class AuthorController {
 	public String formUpdateAuthor(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes){
 		Author author = authorService.findById(id).orElse(null);
 		if(author == null) {
-			redirectAttributes.addFlashAttribute("error", "Autore non trovato");
+			redirectAttributes.addFlashAttribute("error", "Author not found");
 			return "redirect:/author/all";
 		}
 		model.addAttribute("author", author);
@@ -113,7 +96,7 @@ public class AuthorController {
 		}
 		try{
 			authorService.updateAuthor(id, author);
-			redirectAttributes.addFlashAttribute("success", "Autore aggiornato con successo");
+			redirectAttributes.addFlashAttribute("success", "Author updated successfully");
 			return "redirect:/author/all";
 		} catch (IllegalArgumentException e){
 			redirectAttributes.addFlashAttribute("error", e.getMessage());
@@ -125,7 +108,7 @@ public class AuthorController {
 	public String author(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes){
 		Author author = this.authorService.findById(id).orElse(null);
 		if(author == null){
-			redirectAttributes.addFlashAttribute("error", "Autore non trovato");
+			redirectAttributes.addFlashAttribute("error", "Author not found");
 			return "redirect:/author/all";
 		}
 

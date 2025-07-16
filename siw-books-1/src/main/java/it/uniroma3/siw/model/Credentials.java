@@ -11,12 +11,6 @@ public class Credentials {
 	public static final String USER_ROLE = "USER";
 	public static final String ADMIN_ROLE = "ADMIN";
 
-	
-	/*
-	public static final String ROLE_DEFAULT = "ROLE_DEFAULT";
-	public static final String ROLE_ADMIN = "ROLE_ADMIN";
-	 */
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -95,6 +89,6 @@ public class Credentials {
 			return false;
 		Credentials o = (Credentials)obj;
 		return Objects.equals(username, o.username) && Objects.equals(password, o.password) && Objects.equals(role, o.role)
-				&& Objects.equals(user, o.user);
+				&& Objects.equals(user, o.user) && Objects.equals(id, o.id);
 	}
 }

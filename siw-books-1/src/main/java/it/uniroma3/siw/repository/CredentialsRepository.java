@@ -13,5 +13,4 @@ public interface CredentialsRepository extends JpaRepository<Credentials, Long> 
 	boolean existsByUsername(String username);
 
 	//findById should already be implemented on CrudRepository
-//	public Optional<Credentials> findById(Long id);
 }

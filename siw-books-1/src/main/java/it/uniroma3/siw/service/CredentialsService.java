@@ -1,7 +1,5 @@
 package it.uniroma3.siw.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,10 +22,6 @@ public class CredentialsService {
 	public Credentials findByUsername(String username) {
 		return credentialsRepository.findByUsername(username).orElse(null);
 	}
-
-//	public Credentials findById(Long id) {
-//		return credentialsRepository.findById(id).orElse(null);
-//	}
 	
 	@Transactional 
 	public Credentials saveCredentials(Credentials credentials) {
@@ -39,6 +33,9 @@ public class CredentialsService {
 	public Credentials getLoggedCredentials() {
 		try{
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			if(authentication==null || !authentication.isAuthenticated()){
+				return null;
+			}
 			String currentUsername = authentication.getName();
 			return findByUsername(currentUsername);
 		} catch (Exception e){

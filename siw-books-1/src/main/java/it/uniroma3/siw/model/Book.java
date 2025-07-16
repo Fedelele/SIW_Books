@@ -12,22 +12,20 @@ import jakarta.validation.constraints.NotNull;
 //This is being implemented for REST controllers
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
-// --- AGGIUNGI QUESTO BLOCCO PER VEDERE SE FUNZIONA ADD BOOK ---
 @NamedEntityGraph(
 		name = "Book.withDescription",
 		attributeNodes = {
 			@NamedAttributeNode("description")
 		}
 )
-//-------------------------------------------------------------
 public class Book {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@NotBlank(message = "Il titolo è obbligatorio")
+	@NotBlank(message = "Title is required")
 	private String title;
-	@NotNull(message = "L'anno è obbligatorio")
+	@NotNull(message = "Year of release required")
 	private Integer year;
 
 	//Variables for the description and images of the book
@@ -119,7 +117,7 @@ public class Book {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(title, year);
+		return Objects.hash(id, title, year);
 	}
 	
 	@Override
@@ -131,6 +129,6 @@ public class Book {
 		if(this.getClass()!=obj.getClass())
 			return false;
 		Book o = (Book) obj;
-		return Objects.equals(title, o.title) && year.equals(o.year) && Objects.equals(id, o.id);
+		return Objects.equals(this.title, o.title) && Objects.equals(this.year, o.year) && Objects.equals(this.id, o.id);
 	}
 }

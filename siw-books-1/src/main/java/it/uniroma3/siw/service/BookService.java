@@ -61,10 +61,6 @@ public class BookService {
 			return this.bookRepository.findAll();
 		}
 		return this.bookRepository.findByTitleContainingIgnoreCase(keyword);
-//		String lowerKeyword = keyword.toLowerCase();
-//		return allBooks.stream()
-//				.filter(book -> book.getTitle().toLowerCase().contains(lowerKeyword))
-//				.collect(Collectors.toList());
 	}
 
 	@Transactional
@@ -92,8 +88,6 @@ public class BookService {
 		bookToUpdate.setYear(updatedData.getYear());
 		bookToUpdate.setDescription(updatedData.getDescription());
 		// Authors management
-//		bookToUpdate.getAuthors().clear(); // Removes all existing authors
-		//Like above but more robust
 		for(Author author : new ArrayList<>(bookToUpdate.getAuthors())) {
 			author.getAuthorsOf().remove(bookToUpdate);
 		}

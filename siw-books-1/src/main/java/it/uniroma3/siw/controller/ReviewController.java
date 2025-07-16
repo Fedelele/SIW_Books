@@ -4,7 +4,6 @@ import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.service.CredentialsService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.websocket.WebSocketMessageBrokerSecurityBeanDefinitionParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -38,7 +37,6 @@ public class ReviewController {
 	@Autowired
 	private CredentialsService credentialsService;
 
-	//CHECK
 	@GetMapping("/user/formNewReview/{bookId}")
 	public String showReviewForm(@PathVariable Long bookId, Model model, RedirectAttributes redirectAttributes) {
 		Book book = this.bookService.findById(bookId).orElse(null);
@@ -165,40 +163,4 @@ public class ReviewController {
 		}
 		return "redirect:/book/details/" + review.getBook().getId();
 	}
-
-
-	//Delete review -> ADMIN AND USER ONLY
-//	@PostMapping("/admin/reviews/delete/{id}")
-//	public String deleteReview(@PathVariable Long id, Model model) {
-//		Review review = reviewService.findById(id).orElse(null);
-//		if(review == null){
-//			model.addAttribute("error", "Review not found");
-//			return "error";
-//		}
-//
-//		//This is useful is we let a user delete his own review
-//		Credentials credentials = credentialsService.getLoggedCredentials();
-//		if(credentials == null){
-//			model.addAttribute("error", "You must be logged in to delete a review");
-//			return "error";
-//		}
-//
-//		User user = credentials.getUser();
-//		if(!user.getReviews().contains(review) && !credentials.getRole().equals("ADMIN")){
-//			model.addAttribute("error", "You can't delete this review");
-//			return "error";
-//		} else if(user.getReviews().contains(review)) {
-//			//I think this is for users to delete their own reviews
-//			user.getReviews().remove(review);
-//		} else if (credentials.getRole().equals("ADMIN")) {
-//			User temp = review.getUser();
-//			temp.getReviews().remove(review);
-//		}
-//
-//		List<Review> reviews = reviewService.findAllReviews();
-//		reviews.remove(review);
-//		reviewService.delete(review);
-//
-//		return "redirect:/book/details/" + review.getBook().getId();
-//	}
 }

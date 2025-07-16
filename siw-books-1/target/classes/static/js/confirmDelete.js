@@ -1,15 +1,15 @@
 /**
- * Funzione helper per creare e inviare form con il token CSRF
+ * Helper function to create and send form with the CSRF token
  */
 function postWithCsrf(action){
     const form = document.createElement('form');
     form.method = 'POST';
     form.action = action;
 
-    //legge il token dal meta tag
+    //reads token from meta tag
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
 
-    //crea un campo nascosto per il token
+    //creates a hidden field for the token
     const csrfInput = document.createElement('input');
 
     csrfInput.type = 'hidden';
@@ -26,33 +26,34 @@ function postWithCsrf(action){
 
 
 /**
- * Chiede conferma prima di eliminare un libro.
- * Invia una richiesta POST a un endpoint sicuro.
+ * Asks confirmation before deleting a book
+ * Sends a POST request to a secure endpoint
+ *
  */
 function confirmDeleteBook(id, title) {
-    if (confirm(`Sei sicuro di voler eliminare il libro "${title}"? Questa azione è irreversibile.`)) {
+    if (confirm(`Are you sure you want to delete the book "${title}"? This action cannot be undone.`)) {
         postWithCsrf(`/admin/book/delete/${id}`);
     }
-    return false; // Previene l'azione di default del link
+    return false;
 }
 
 /**
- * Chiede conferma prima di eliminare un autore.
- * Invia una richiesta POST a un endpoint sicuro.
+ * Asks confirmation before deleting an author
+ * Sends a POST request to a secure endpoint
  */
 function confirmDeleteAuthor(id, name) {
-    if (confirm(`Sei sicuro di voler eliminare l'autore "${name}"? Questa azione è irreversibile.`)) {
+    if (confirm(`Are you sure you want to delete the author "${name}"? This action cannot be undone.`)) {
         postWithCsrf(`/admin/author/delete/${id}`);
     }
     return false;
 }
 
 /**
- * Chiede conferma prima di eliminare una recensione.
- * Invia una richiesta POST a un endpoint sicuro.
+ * Asks confirmation before deleting a review
+ * Sends a POST request to a secure endpoint
  */
 function confirmDeleteReview(id, title) {
-    if (confirm(`Sei sicuro di voler eliminare la recensione "${title}"?`)) {
+    if (confirm(`Are you sure you want to delete the review "${title}"?`)) {
        postWithCsrf(`/admin/reviews/delete/${id}`);
     }
     return false;

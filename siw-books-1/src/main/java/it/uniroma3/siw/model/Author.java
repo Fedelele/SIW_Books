@@ -16,23 +16,22 @@ public class Author {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@NotBlank(message = "Il nome è obbligatorio")
+	@NotBlank(message = "Name is required")
 	private String name;
-	@NotBlank(message = "Il cognome è obbligatorio")
+	@NotBlank(message = "Surname is required")
 	private String surname;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfBirth;
 	//Not always requested
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfDeath;
-	@NotBlank(message = "La nazionalità è obbligatoria")
+	@NotBlank(message = "Nationality is required")
 	private String nationality;
 
 	//Variables for the description and images of the author
-//	@Lob
 	@Column(columnDefinition = "Text")
 	private String bio;
-//	@Lob
+
 	private String imageUrl;
 
 	@ManyToMany(mappedBy = "authors", cascade = {CascadeType.PERSIST, CascadeType.MERGE})

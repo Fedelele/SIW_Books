@@ -1,5 +1,5 @@
 /* ================================== */
-/* =      STILE PER I MODULI        = */
+/* =      FORM STYLE                = */
 /* ================================== */
 
 .form-container, .content.flex.flex-column {
@@ -65,7 +65,7 @@ textarea {
     margin-top: 5px;
 }
 
-/* Stile per il rating a stelle */
+/* Style for rating system*/
 #stars {
     cursor: pointer;
     font-size: 1.8rem;

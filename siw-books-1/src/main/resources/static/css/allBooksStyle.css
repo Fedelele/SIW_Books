@@ -1,5 +1,5 @@
 /* ================================== */
-/* =   STILE PER LISTE DI CONTENUTI = */
+/* = Style for list of content = */
 /* ================================== */
 
 .content .title {
@@ -125,24 +125,23 @@
     font-size: 0.9rem;
 }
 
-/* Stile per il contenitore delle azioni (modifica/elimina) */
+/* Style for the container of actions(edit/delete) */
 .content-actions {
     display: flex;
     align-items: center;
     gap: 1rem;
-    flex-shrink: 0; /* Evita che le icone si restringano se lo spazio è poco */
+    flex-shrink: 0; /* Avoids that icons shrink if there's not enough space */
 }
 
-/* Stile generico per le icone di azione */
+/* Generic style for the action icon */
 .action-icon {
     font-size: 1.2rem;
     color: var(--subtle-text-color);
     padding: 0.5rem;
     transition: color 0.3s ease;
-    text-decoration: none; /* Rimuove la sottolineatura */
+    text-decoration: none;
 }
 
-/* Colore al passaggio del mouse */
 .action-icon.edit-icon:hover {
     color: var(--primary-color);
 }

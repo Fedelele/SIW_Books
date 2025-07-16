@@ -3,20 +3,16 @@ package it.uniroma3.siw.repository;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import it.uniroma3.siw.model.Book;
 import org.springframework.data.jpa.repository.Query;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-	//-------PROVA PER VEDERE SE RISOLVE SAVE NEW BOOK--------
 	@Override
-	@EntityGraph(attributePaths = {"description", "authors"}) //Usa l'Entity graph per caricare la descrizione
+	@EntityGraph(attributePaths = {"description", "authors"}) //Use the entity graph to upload the description
 	List<Book> findAll();
-	//-------------------------------------------------------
 	
 	 List<Book> findByYear(int year);
 

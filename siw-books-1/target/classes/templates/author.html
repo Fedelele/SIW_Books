@@ -14,24 +14,24 @@
     <header th:replace="~{fragments/header :: header}"></header>
 
     <div class="container author-page-container" th:if="${author != null}">
-        <!-- Intestazione con il nome dell'autore -->
-        <div class="book-header"> <!-- Riusiamo la classe per coerenza -->
+        <!-- Header with author's name -->
+        <div class="book-header">
             <h1 th:text="${author.name + ' ' + author.surname}">Author Name</h1>
         </div>
 
-        <!-- Contenuto principale a due colonne -->
-        <div class="book-main-content" style="margin-top: 2rem;"> <!-- Riusiamo la classe per coerenza -->
-            <!-- Colonna sinistra: Foto -->
-            <div class="book-cover"> <!-- Riusiamo la classe per coerenza -->
+        <!-- Main content and  two columns -->
+        <div class="book-main-content" style="margin-top: 2rem;">
+            <!-- Left column: photo -->
+            <div class="book-cover">
                 <img th:if="${author.imageUrl != null}" th:src="${author.imageUrl}" alt="Author Photo" style="object-fit: cover; object-position: top;">
                 <div th:unless="${author.imageUrl}" class="placeholder-image">
                     <i class="fas fa-user" style="font-size: 8rem;"></i>
                 </div>
             </div>
 
-            <!-- Colonna destra: Informazioni -->
-            <div class="book-info"> <!-- Riusiamo la classe per coerenza -->
-                <div class="average-rating-box"> <!-- Riusiamo la classe per un box informativo -->
+            <!-- Right column: details -->
+            <div class="book-info">
+                <div class="average-rating-box">
                     <h3>Details</h3>
                     <p><strong>Nationality:</strong> <span th:text="${author.nationality}"></span></p>
                     <p><strong>Born:</strong> <span th:text="${#temporals.format(author.dateOfBirth, 'dd MMMM yyyy')}"></span></p>
@@ -45,8 +45,8 @@
             </div>
         </div>
 
-        <!-- Sezione Libri -->
-        <div class="reviews-section"> <!-- Riusiamo la classe per la separazione -->
+        <!-- Book section -->
+        <div class="reviews-section">
             <h2>Books by this Author</h2>
             <div th:if="${!#lists.isEmpty(author.authorsOf)}" class="content-list-container">
                 <div th:each="book: ${author.authorsOf}" class="content-list-item-wrapper">
@@ -68,48 +68,3 @@
     </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--    <div class="flex book-content justify-center">-->
-<!--        <div class="title" th:if="${author != null}">-->
-<!--            <h1 th:text="${author.name + ' ' + author.surname}">Author Name</h1>-->
-<!--        </div>-->
-<!--        <div class="content-left">-->
-<!--            <img class="author-image justify-start" th:if="${author != null and author.imageUrl != null}" th:src="${author.imageUrl}">-->
-<!--            <div class="author-details-section">-->
-<!--                <p><strong>Nationality:</strong> <span th:text="${author.nationality}"></span></p>-->
-<!--                <p><strong>Born:</strong> <span th:text="${#temporals.format(author.dateOfBirth, 'dd MMMM yyyy')}"></span></p>-->
-<!--                <p th:if="${author.dateOfDeath != null}"><strong>Died:</strong> <span th:text="${#temporals.format(author.dateOfDeath, 'dd MMMM yyyy')}"></span></p>-->
-<!--            </div>-->
-<!--            <div class="bio">-->
-<!--                <h2>Biography</h2>-->
-<!--                <p th:text="${author.bio}"></p>-->
-<!--            </div>-->
-<!--            <div th:if="${!#lists.isEmpty(author.authorsOf)}" class="content-list-container">-->
-<!--                <div th:each="book: ${author.authorsOf}">-->
-<!--                    <a class="content-list-item-link" th:href="@{'/book/details/' + ${book.id}}">-->
-<!--                        <div class="content-list-item">-->
-<!--                            <img class="content-thumbnail" th:src="${book.imageUrl}">-->
-<!--                            <div class="content-details">-->
-<!--                                <span class="content-title-text" th:if="${book.id != null}" th:text="${book.title}">Book Title</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</body>-->
-<!--</html>-->

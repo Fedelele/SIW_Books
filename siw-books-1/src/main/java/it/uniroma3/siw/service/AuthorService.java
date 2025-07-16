@@ -13,18 +13,12 @@ import it.uniroma3.siw.repository.AuthorRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import org.springframework.context.annotation.Lazy;
 
 @Service
 public class AuthorService {
 	
 	@Autowired
 	private AuthorRepository authorRepository;
-
-	@Autowired
-	@Lazy
-	private BookService bookService;
 
 	@Transactional
 	public Optional<Author> findById(Long id) {
@@ -59,8 +53,6 @@ public class AuthorService {
 		//To maintain the bidirectionality we have to eliminate the book from the Set
 		//associated with the author and the books written
 		author.getAuthorsOf().remove(book);
-		//LET ME TRY GETTING THIS OFF
-//		this.bookService.save(book);
 	}
 
 	//Method to delete the author from every book he's been mentioned
@@ -68,7 +60,6 @@ public class AuthorService {
 	public void deleteAuthor(Author author){
 		List<Book> booksToDelete = new ArrayList<>(author.getAuthorsOf());
 		for(Book b : booksToDelete){
-//			removeAuthorFromBook(author, b);
 			b.getAuthors().remove(author);
 		}
 		this.authorRepository.delete(author);

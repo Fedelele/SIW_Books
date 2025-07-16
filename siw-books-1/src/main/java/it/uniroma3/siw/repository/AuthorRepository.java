@@ -17,12 +17,6 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
 	@Query("SELECT a FROM Author a WHERE a NOT IN (SELECT b.authors FROM Book b WHERE b.id = :bookId)")
     Iterable<Author> findAuthorsNotInBook(@Param("bookId") Long id);
 
-//	boolean existsByNameAndSurname(String name, String surname);
-//
-//	List<Author> findBySurnameContainingIgnoreCase(String lastName);
-//	List<Author> findByNationality(String nationality);
-//	List<Author> findByNameAndSurname(String firstName, String lastName);
-
 	List<Author> findByNameContainingIgnoreCaseOrSurnameContainingIgnoreCase(String nameKeyword, String surnameKeyword);
 
 	//Method to find authors with most books published

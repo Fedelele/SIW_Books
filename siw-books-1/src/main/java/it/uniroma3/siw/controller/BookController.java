@@ -7,10 +7,11 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import it.uniroma3.siw.model.*;
 import it.uniroma3.siw.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class BookController {
+
+	//To log errors when saving an entity fails
+	private static final Logger log = LoggerFactory.getLogger(BookController.class);
 	
 	@Autowired
 	private BookService bookService;
@@ -75,9 +79,6 @@ public class BookController {
 
 		if(image != null || !image.isEmpty()){
 			try{
-				//Version 1
-//				String fileName = book.getTitle() + book.getAuthors().get(0).getName()
-//						+ '.' + image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf(".")+1);
 				String originalFileName = image.getOriginalFilename();
 				String extension = "";
 				if(originalFileName != null  && originalFileName.contains(".")){
@@ -93,6 +94,7 @@ public class BookController {
 				book.setImageUrl(String.format("/books-covers/%s", fileName));
 			}catch(IOException e) {
 				e.printStackTrace();
+				log.error("Image upload failed for book: {}", book.getTitle(), e);
 				bindingResult.reject("image.upload.failed", "Couldn't save the image :(");
 				model.addAttribute("authors", authorService.findAll());
 				return "admin/formNewBook.html";
@@ -122,9 +124,6 @@ public class BookController {
 							 @RequestParam(value = "authors[]", required = false) List<Long> authorIds,
 							 RedirectAttributes redirectAttributes, Model model){
 
-		//LET ME SEE IF IT WORKS WITHOUT
-//		this.bookValidator.validate(book, bindingResult);
-//
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("authors", this.authorService.findAll());
 			//Returns to the form with the errors
@@ -141,55 +140,7 @@ public class BookController {
 			model.addAttribute("authors", this.authorService.findAll());
 			return "admin/formNewBook";
 		}
-
-//		return "redirect:/book/all";
 	}
-
-	//Version 1
-//	@GetMapping("/book/details/{id}")
-//	public String book(@PathVariable Long id, Model model) {
-//		Book book = this.bookService.findById(id).orElse(null);
-//		if (book == null) {
-//			model.addAttribute("error", "Book not found");
-//			return "error";
-//		}
-//
-//		//Logged user credentials check
-//		Credentials loggedCredentials = credentialsService.getLoggedCredentials();
-//		if (loggedCredentials == null) {
-//			model.addAttribute("isLoggedIn", false);
-//			model.addAttribute("book", book);
-//			model.addAttribute("hasReviewed", false);
-//			model.addAttribute("userReview", null);
-//			model.addAttribute("reviews", book.getReviews());
-//			model.addAttribute("role", "NOROLE");
-//			return "book";
-//		}
-//		User user = loggedCredentials.getUser();
-//		model.addAttribute("isLoggedIn", true);
-//
-//		boolean hasReviewed = false;
-//		if(!user.getReviews().isEmpty()){
-//			hasReviewed = reviewService.hasUserReviewedBook(user, book);
-//		}
-//
-//		//If the user has already reviewed a book, it isolates it from the list of reviews
-//		List<Review> reviews = book.getReviews();
-//		if(hasReviewed){
-//			Optional<Review> userReview = reviewService.findReviewByUserAndBook(user, book);
-//			model.addAttribute("userReview", userReview);
-//			reviews.remove(userReview);
-//			model.addAttribute("reviews", reviews);
-//		}else{
-//			model.addAttribute("userReview", null);
-//			model.addAttribute("reviews", reviews);
-//		}
-//
-//		model.addAttribute("book", book);
-//		model.addAttribute("hasReviewed", hasReviewed);
-//
-//		return "book";
-//	}
 
 	@GetMapping("/book/details/{id}")
 	public String book(@PathVariable Long id, Model model) {

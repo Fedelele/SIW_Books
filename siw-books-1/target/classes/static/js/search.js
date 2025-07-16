@@ -11,9 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         items.forEach(item => {
             const title = item.querySelector('.content-title-text')?.textContent.toLowerCase() || '';
-            const subtitle = item.querySelector('.content-subtitle-text')?.textContent.toLowerCase() || '';
+            //const subtitle = item.querySelector('.content-subtitle-text')?.textContent.toLowerCase() || '';
 
-            if (title.includes(searchTerm) || subtitle.includes(searchTerm)) {
+            //if (title.includes(searchTerm) || subtitle.includes(searchTerm)) {
+            if (title.includes(searchTerm)){
                 item.style.display = 'flex';
             } else {
                 item.style.display = 'none';

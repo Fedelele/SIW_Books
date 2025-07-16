@@ -28,9 +28,6 @@
                     <i class="fas fa-plus"></i>
                 </a>
             </div>
-<!--            <button th:if="${role == 'ADMIN'}" class="add-content-button" onclick="window.location.href='/book/new'">-->
-<!--                <i class="fas fa-plus"></i>-->
-<!--            </button>-->
         </div>
         <div th:if="${!#lists.isEmpty(books)}" class="content-list-container">
             <div th:each="book : ${books}" class="content-list-item-wrapper">
@@ -43,7 +40,7 @@
                          </div>
                     </div>
                 </a>
-                <div sec:authorize="hasAuthority('ADMIN')" style="content-actions">
+                <div class="content-actions" sec:authorize="hasAuthority('ADMIN')">
                     <a th:href="@{'/admin/formUpdateBook/' + ${book.id}}" class="action-icon edit-icon" title="Edit">
                         <i class="fas fa-pen"></i>
                     </a>

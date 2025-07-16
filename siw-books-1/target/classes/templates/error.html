@@ -4,38 +4,16 @@
     <meta charset="UTF-8">
     <title>Error</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <!--Soon to eliminate-->
-<!--    <style>-->
-<!--        /* style for bug infos*/-->
-<!--        .developer-info {-->
-<!--            margin-top: 2rem;-->
-<!--            background-color: #f3f3f3;-->
-<!--            border: 1px solid #ccc;-->
-<!--            padding: 1rem;-->
-<!--            border-radius: 5px;-->
-<!--        }-->
-<!--        .developer-info pre {-->
-<!--            white-space: pre-wrap;-->
-<!--            word-wrap: break-word;-->
-<!--            background-color: #e9e9e9;-->
-<!--            padding: 10px;-->
-<!--            border-radius: 4px;-->
-<!--            max-height: 300px;-->
-<!--            overflow-y: auto;-->
-<!--        }-->
-<!--    </style>-->
 </head>
 <body>
 <header th:replace="~{fragments/header :: header}"></header>
 <div class="container">
     <div class="alert alert-danger" style="text-align: center; padding: 2rem;">
         <h2>Oops! There has been an error.</h2>
-
         <!--
-            Logica condizionale:
-            1. Se 'status' esiste, è un errore gestito da Spring Boot. Mostriamo i dettagli.
-            2. Se 'error' (il nostro attributo custom) esiste ma 'status' no, è un errore manuale.
-            3. Altrimenti, un messaggio generico.
+            1. If status exists, it's an error managed by Spring Boot
+            2. If error exists but status doesn't -> manual error
+            3. Otherwise, it's a generic message
         -->
         <div th:if="${status}">
             <p>

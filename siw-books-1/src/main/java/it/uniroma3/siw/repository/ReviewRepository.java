@@ -2,16 +2,13 @@ package it.uniroma3.siw.repository;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import it.uniroma3.siw.model.Book;
 import it.uniroma3.siw.model.Review;
 import it.uniroma3.siw.model.User;
 import org.springframework.data.repository.query.Param;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-
 
 	//finds all reviews for a book
 	List<Review> findByBook(Book book);
@@ -22,5 +19,4 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 	Optional<Review> findByUserAndBook(@Param("user") User user,@Param("book") Book book);
 	//Deletes all reviews of a book -> used for administrator role only
 	void deleteByBook(Book book);
-
 }

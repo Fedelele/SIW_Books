@@ -1,26 +1,25 @@
 /* ================================== */
-/* =      STILE GLOBALE (CORE)      = */
+/* =      GLOBAL STYLE (CORE)       = */
 /* ================================== */
 
-/* --- Variabili Globali (Palette & Font) --- */
+/* ---(Palette & Font) --- */
 :root {
-    /* Nuova Palette "Sage & Teal" - Moderna ed elegante */
-    --background-color: #f4f7f6;    /* Grigio-verde salvia molto chiaro per lo sfondo */
-    --primary-color: #004d40;       /* Verde acqua scuro (Teal) per titoli e elementi primari */
-    --primary-hover-color: #00695c;  /* Versione più chiara per l'hover */
-    --accent-color: #ffab40;        /* Ambra/Arancione per accenti vivaci e caldi */
-    --text-color: #37474f;          /* Grigio ardesia scuro per il testo, più morbido del nero */
-    --subtle-text-color: #78909c;    /* Grigio ardesia chiaro per dettagli e testo secondario */
-    --border-color: #cfd8dc;        /* Grigio-blu chiaro per i bordi, si abbina bene */
-    --success-color: #2e7d32;       /* Verde per messaggi di successo */
-    --error-color: #c62828;         /* Rosso per messaggi di errore */
-    --secondary-bg-color: #ffffff;  /* Bianco per card e header, per un contrasto pulito */
+    --background-color: #f4f7f6;
+    --primary-color: #004d40;
+    --primary-hover-color: #00695c;
+    --accent-color: #ffab40;
+    --text-color: #37474f;
+    --subtle-text-color: #78909c;
+    --border-color: #cfd8dc;
+    --success-color: #2e7d32;
+    --error-color: #c62828;
+    --secondary-bg-color: #ffffff;
 
     --font-primary: "Inter", sans-serif;
     --font-headings: "Faculty Glyphic", serif;
 }
 
-/* --- Reset e Stili di Base --- */
+/* --- Reset e and base styles --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -59,7 +58,7 @@ a:hover {
     text-decoration: underline;
 }
 
-/* --- Layout e Contenitori --- */
+/* --- Layout e Containers --- */
 .container, .content, .flex-content {
     width: 95%;
     max-width: 1200px;
@@ -115,7 +114,7 @@ a:hover {
     color: var(--accent-color);
 }
 
-/* --- Pulsanti --- */
+/* --- Buttons --- */
 .btn {
     display: inline-block;
     padding: 12px 24px;
@@ -150,7 +149,7 @@ a:hover {
     transform: translateY(-2px);
 }
 
-/* --- Placeholder per liste vuote --- */
+/* --- Placeholder for empty lists --- */
 .placeholder-text {
     text-align: center;
     color: var(--subtle-text-color);
@@ -160,35 +159,6 @@ a:hover {
     border: 2px dashed var(--border-color);
     margin: 2rem 0;
 }
-
-/*.author-details-section {*/
-/*    margin-bottom: 2rem;*/
-/*    padding-left: calc(300px + 2rem);*/
-/*}*/
-
-/*.author-details-section p{*/
-/*    font-size: 1.1rem;*/
-/*    margin-bottom: 0.5rem;*/
-/*}*/
-
-/*.author-details-section strong{*/
-/*    color: var(--primary-color);*/
-/*}*/
-
-/*.bio {*/
-/*    clear: both;*/
-/*    margin-top: 2rem;*/
-/*    text-align: justify;*/
-/*}*/
-
-/*.justify-center{*/
-/*    justify-content: center;*/
-/*}*/
-
-/*.content-left{*/
-/*    width: 100%;*/
-/*    max-width: 1100px;*/
-/*}*/
 
 .rating .fas.fa-star{
     color: var(--accent-color);

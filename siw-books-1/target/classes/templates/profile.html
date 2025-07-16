@@ -15,24 +15,18 @@
 <div class="container" style="margin-top: 2rem;">
   <div th:if="${user}">
     <div class="flex gap-9">
-      <!-- Colonna sinistra per l'immagine (placeholder) -->
+      <!-- Left column for the profile pic (placeholder) -->
       <div style="flex: 0 0 200px; text-align: center;">
         <i class="fas fa-user-circle" style="font-size: 150px; color: var(--border-color);"></i>
       </div>
 
-      <!-- Colonna destra per i dettagli -->
+      <!-- Right column: details -->
       <div style="flex-grow: 1;">
         <h1 th:text="'Profile: ' + ${credentials.username}">User Profile</h1>
         <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
         <p><strong>Surname:</strong> <span th:text="${user.surname}"></span></p>
         <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
         <p><strong>Username:</strong> <span th:text="${credentials.username}"></span></p>
-
-        <!-- Pulsanti di azione (per ora non funzionanti) -->
-        <div style="margin-top: 1.5rem;">
-          <a href="#" class="btn btn-primary">Edit Profile</a>
-          <a href="#" class="btn btn-secondary">Change Password</a>
-        </div>
       </div>
     </div>
 

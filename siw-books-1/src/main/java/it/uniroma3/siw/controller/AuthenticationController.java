@@ -34,20 +34,6 @@ public class AuthenticationController {
 	@Autowired
 	private ReviewService reviewService;
 
-//Version 1
-//	@GetMapping("/")
-//	public String homeRedirectedByRole() {
-//		Credentials credentials = credentialsService.getLoggedCredentials();
-//
-//		//if the user has role "ADMIN", send him to the admin page
-//		if (credentials != null && Credentials.ADMIN_ROLE.equals(credentials.getRole())) {
-//			return "redirect:/admin/home";
-//		}
-//		//else send him to the default page
-//		return "redirect:/home";
-//	}
-
-	//Version 2
 	@GetMapping("/")
 	public String index(){
 		return "redirect:/home";
@@ -83,34 +69,6 @@ public class AuthenticationController {
 		return "formLogin.html";
 	}
 
-	//Version 1
-//	@GetMapping(value="/register")
-//	public String showRegisterForm(Model model) {
-//		model.addAttribute("user", new User());
-//		model.addAttribute("credentials", new Credentials());
-//		return "formRegister.html";
-//	}
-//
-//	@PostMapping("/register")
-//	public String registerUser(@ModelAttribute User user,
-//							   BindingResult userBindingResult, @ModelAttribute Credentials credentials,
-//							   BindingResult credentialsBindingResult,
-//							   Model model) {
-//		//Validation to check if already exists a user with the same username
-//		this.credentialsValidator.validate(credentials, credentialsBindingResult);
-//
-//		//If both user and credential are valid, memorize them in the DB
-//		if(!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
-//			this.userService.save(user);
-//			credentials.setUser(user);
-//			credentialsService.saveCredentials(credentials);
-//			model.addAttribute("user", user);
-//			return "registrationSuccessful.html";
-//		}
-//		return "formRegister.html";
-//	}
-
-	//Version 2
 	@GetMapping(value="/register")
 	public String showRegisterForm(Model model) {
 		model.addAttribute("registrationForm", new RegistrationForm());
